@@ -1,0 +1,15 @@
+---
+title: "English Word lengths"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## English Word Length Distribution
+
+Word lengths are approximately normally distributed around 9 characters:
+
+![*Fig. 1* A histogram of English word lengths](data/histogram.png)
