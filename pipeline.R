@@ -1,6 +1,6 @@
 library(makepipe)
 
-# Obtain a large file of English words.
+# Obtain a large file of English words -----------------------------------------
 if (!file.exists("data/words.txt")) {
   download.file(
     "https://svnweb.freebsd.org/base/head/share/dict/web2?view=co", 
@@ -9,14 +9,20 @@ if (!file.exists("data/words.txt")) {
   )
 }
 
-# Calculate a histogram of word lengths.
-makepipe::make_with_source(
+# Calculate a histogram of word lengths ----------------------------------------
+res <- makepipe::make_with_source(
 	source = "data_prep.R",
 	targets = "data/histogram.tsv",
 	dependencies = "data/words.txt"
 )
 
-# Generate a figure of this histogram.
+res # Print execution meta-data 
+if (prep$executed) {
+  # Check that the `hist_dat` object registered in `data_prep.R` is a table
+  stopifnot(is.table(res$result$hist_dat)) 
+}
+
+# Generate a figure of this histogram ------------------------------------------
 makepipe::make_with_source(
 	source = "data_viz.R",
 	targets = "data/histogram.png",
@@ -27,7 +33,7 @@ if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf") # Clean up unwanted .pdf by-product
 }
 
-# Render a R Markdown report in HTML.
+# Render a R Markdown report in HTML -------------------------------------------
 makepipe::make_with_recipe(
 	recipe = rmarkdown::render(
 		"report.Rmd",
@@ -37,7 +43,7 @@ makepipe::make_with_recipe(
 	dependencies = c("report.Rmd", "data/histogram.png")
 )
 
-# Display pipeline visualisation.
+# Display pipeline visualisation -----------------------------------------------
 makepipe::show_pipeline(
   tooltips = c(
     data_prep.R = "Calculate a histogram of word lengths",

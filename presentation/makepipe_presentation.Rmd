@@ -14,6 +14,13 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
+<style type="text/css">
+.remark-code { 
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-size: 16px;
+}
+</style>
+
 class: inverse, center, middle
 
 # The Problem 
@@ -559,6 +566,54 @@ makepipe::make_with_recipe(
 	targets = "output/report.html",
 	dependencies = c("report.Rmd", "data/histogram.png")
 )
+```
+
+---
+# Execution meta-data
+
+```r
+res <- makepipe::make_with_source(
+	source = "data_prep.R",
+	targets = "data/histogram.tsv",
+	dependencies = "data/words.txt"
+)
+
+*res # Print execution meta-data 
+
+#> # makepipe segment
+#> * Source: 'data_prep.R'
+#> * Targets: 'data/histogram.tsv'
+#> * File dependencies: 'data/words.txt'
+#> * Executed: TRUE
+#> * Result: 1 object(s)
+#> * Environment: 0x0000021fbcc4be10
+```
+
+---
+# Object registration
+
+Add to data_prep.R script:
+
+```r
+words <- readLines("data/words.txt")
+Length <- nchar(words)
+hist_dat <- table(Length)
+*makepipe::make_register(hist_dat, 'hist_dat')
+write.table(hist_dat, "data/histogram.tsv",
+						sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+Then in pipeline
+
+```r
+res <- makepipe::make_with_source(
+	source = "data_prep.R",
+	targets = "data/histogram.tsv",
+	dependencies = "data/words.txt"
+)
+
+# Print to console check on histogram data
+*if(res$executed) print(res$result$hist_data)  
 ```
 
 ---
