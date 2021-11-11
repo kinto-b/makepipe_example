@@ -626,6 +626,14 @@ makepipe::show_pipeline()
 <img src="figures/makepipe-pipeline.png"; style="max-height:800px;">
 
 ---
+# Automatic documentation
+
+And the SES report tables:
+
+<img src="figures/makepipe-tables_outputs.png"; style="max-height:800px;">
+
+
+---
 class: inverse, center, middle
 
 # Thanks!

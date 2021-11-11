@@ -6,7 +6,7 @@ has been automated in two ways, first using `GNU Make` and second using
 heavy lifting is being done by the [`Makefile`](Makefile); in the latter
 case, by [`pipeline.R`](pipeline.R). 
 
-The pipeline, which I have lifted directly from Jenny Bryan's [STAT545 course](https://stat545.com/automating-pipeline.html) does four things. It:
+The pipeline, which I have lifted directly from Jenny Bryan's [STAT545 course](https://stat545.com/automating-pipeline.html), does four things. It:
     
   1. Obtains a large file of English words.
   2. Calculates a histogram of word lengths.
