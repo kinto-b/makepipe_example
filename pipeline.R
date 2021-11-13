@@ -17,7 +17,7 @@ res <- makepipe::make_with_source(
 )
 
 res # Print execution meta-data 
-if (prep$executed) {
+if (res$executed) {
   # Check that the `hist_dat` object registered in `data_prep.R` is a table
   stopifnot(is.table(res$result$hist_dat)) 
 }
