@@ -9,8 +9,9 @@ if (!file.exists("data/words.txt")) {
   )
 }
 
-# Calculate a histogram of word lengths ----------------------------------------
+# Histogram --------------------------------------------------------------------
 res <- makepipe::make_with_source(
+  note = "Calculate a histogram of word lengths",
 	source = "data_prep.R",
 	targets = "data/histogram.tsv",
 	dependencies = "data/words.txt"
@@ -22,8 +23,9 @@ if (res$executed) {
   stopifnot(is.table(res$result$hist_dat)) 
 }
 
-# Generate a figure of this histogram ------------------------------------------
+# Figure -----------------------------------------------------------------------
 makepipe::make_with_source(
+  note = "Generate a figure of this histogram",
 	source = "data_viz.R",
 	targets = "data/histogram.png",
 	dependencies = "data/histogram.tsv"
@@ -33,8 +35,9 @@ if (file.exists("Rplots.pdf")) {
   file.remove("Rplots.pdf") # Clean up unwanted .pdf by-product
 }
 
-# Render a R Markdown report in HTML -------------------------------------------
+# Report -----------------------------------------------------------------------
 makepipe::make_with_recipe(
+  note = "Render a R Markdown report in HTML",
 	recipe = rmarkdown::render(
 		"report.Rmd",
 		output_file = "output/report.html"
@@ -44,10 +47,4 @@ makepipe::make_with_recipe(
 )
 
 # Display pipeline visualisation -----------------------------------------------
-makepipe::show_pipeline(
-  tooltips = c(
-    data_prep.R = "Calculate a histogram of word lengths",
-    data_viz.R = "Generate a figure of this histogram",
-    report.Rmd = "Render a R Markdown report in HTML"
-  )
-)
+makepipe::show_pipeline()
