@@ -1,3 +1,7 @@
+#
+# A pipeline built using `make_with_source` blocks
+#
+
 library(makepipe)
 
 # Obtain a large file of English words -----------------------------------------
